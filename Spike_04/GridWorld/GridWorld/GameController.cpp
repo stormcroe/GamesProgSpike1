@@ -19,7 +19,9 @@ GameController::~GameController()
 void GameController::GetInput(char *input, bool *gameOver)
 {
 	do{
+		
 		if (*input == NULL){
+			cout << endl << "This is using Threads, This is the Input thread." << endl;
 			char buffer;
 			cout << "Enter A Command. N (North), S (South), E (East), W (West) and Q (Quit): ";
 			cin >> buffer;
@@ -116,7 +118,9 @@ void GameController::GameLoop()
 	thread GetUserInputThread(GetInput, &_input, &_gameover);
 	//When using threads pass by reference does not work as intended, use pointers.
 	do{
+		
 		if (_input){
+			cout << endl << "This is using Threads, This is the Main thread." << endl;
 			Update(_input);
 			Render();
 			_input = NULL;
