@@ -165,7 +165,7 @@ public:
 		while (first->getNext() != (Node*)0){
 			first->getNext()->dropNode();
 		}
-		first->dropNode(); //fix bug
+		//first->dropNode(); //fix bug
 	};
 
 
