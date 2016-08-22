@@ -1,6 +1,6 @@
 /******************************************************************************
 * An implementatrion of a double-linked list (http://en.wikipedia.org/wiki/Double_linked_list)
-* This code has 13 bugs. You don't have to find all of them. 
+* This code has 13 bugs. You don't have to find all of them.
 * Some bugs will be easy to find, some will be quite hard.
 * You do not need to understand what this code does in order to find the easier bugs,
 * and you certainly don't need to understand it to finish the spike.
@@ -28,14 +28,16 @@ public:
 	/*********************************************************************************************
 	* DoubleLinkedNode Class Constructor: Creates DoubleLinkedNode object with value = initvalue
 	*********************************************************************************************/
-	DoubleLinkedNode (const DataType initvalue) : value(initvalue){
-		cout << "Creating Node..."<< endl;
+	DoubleLinkedNode(const DataType initvalue) : value(initvalue){
+		cout << "Creating Node..." << endl;
+		nextnode = NULL; //Bug fix
+		previousnode = NULL; //Bug fix
 	}
-	
+
 	/*********************************************************************************************
 	* DoubleLinkedNode Class Destructor: Destroys DoubleLinkedNode object, freeing memory
 	*********************************************************************************************/
-	~DoubleLinkedNode () {
+	~DoubleLinkedNode() {
 		cout << "Destroying Node... " << endl;
 	}
 
@@ -45,7 +47,7 @@ public:
 	* Output: -
 	*********************************************************************************************/
 	void insertNodeAfter(Node* newnode){
-		if(nextnode){
+		if (nextnode){
 			newnode->insertNodeAfter(nextnode);
 		}
 		setNext(newnode);
@@ -58,7 +60,7 @@ public:
 	* Output: -
 	*********************************************************************************************/
 	void insertNodeBefore(Node* newnode){
-		if(previousnode){
+		if (previousnode){
 			newnode->insertNodeBefore(nextnode);	//should be newnode->insertNodeBefore(previousnode);
 		}
 		setPrevious(newnode);
@@ -71,10 +73,10 @@ public:
 	* Output: -
 	*********************************************************************************************/
 	void dropNode(){
-		if(previousnode){
+		if (previousnode){
 			previousnode->setNext(nextnode);
 		}
-		if(nextnode){
+		if (nextnode){
 			nextnode->setPrevious(previousnode);
 		}
 		delete this;
@@ -86,7 +88,7 @@ public:
 	* Output: Node*. The next Node in the list.
 	*********************************************************************************************/
 	Node* getNext() const{
-		return nextnode; 
+		return nextnode;
 	};
 
 	/*********************************************************************************************
@@ -152,17 +154,18 @@ private:
 public:
 	/*********************************************************************************************
 	* List Class Constructor: Creates List object.
-	* The list is created without any contents. 
+	* The list is created without any contents.
 	*********************************************************************************************/
-	DoubleLinkedList() : first(0), last(0), _length(0){};
+	DoubleLinkedList() : first(0), last(0), _length(0) {};
 
 	/*********************************************************************************************
 	* List Class Destructor: Destroys all nodes allocated as a part of the list and frees memory.
 	*********************************************************************************************/
 	~DoubleLinkedList(){
-		while(first->getNext() != (Node*)0){
+		while (first->getNext() != (Node*)0){
 			first->getNext()->dropNode();
 		}
+		first->dropNode(); //fix bug
 	};
 
 
@@ -172,11 +175,12 @@ public:
 	void append(const T &newelement){
 		Node *N = new Node(newelement);
 
-		if(first == (Node*)0){
+		if (first == (Node*)0){
 			first = N;
 			last = N;
 			_length = 1;
-		}else{
+		}
+		else{
 			last->insertNodeAfter(N);
 			last = N;
 			_length++;
@@ -189,11 +193,12 @@ public:
 	void prepend(const T &newelement){
 		Node *N = new Node(newelement);
 
-		if(first == (Node*)0){
+		if (first == (Node*)0){
 			first = N;
 			last = N;
 			_length = 1;
-		}else{
+		}
+		else{
 			first->insertNodeBefore(N);
 			first = N;
 			_length++;
@@ -201,24 +206,26 @@ public:
 	};
 
 	/*********************************************************************************************
-	* Function: Drops the first Node found with a value matching element, if one exits. If a node 
-	* was found and dropped, true is returned, false otherwise. 
+	* Function: Drops the first Node found with a value matching element, if one exits. If a node
+	* was found and dropped, true is returned, false otherwise.
 	*********************************************************************************************/
 	bool drop(const T &element){
-		if(first->getValue() == element){
+		if (first->getValue() == element){
 			dropFirst();
 			return true;
-		}else if(last->getValue() == element){
+		}
+		else if (last->getValue() == element){
 			dropLast();
 			return true;
 		}
 
 		Node *N = first;
-		while(N != last){
-			if(N->getValue() == element){
+		while (N != last){
+			if (N->getValue() == element){
 				N->dropNode();
 				return true;
 			}
+			N = N->getNext(); // Bug fix //
 		}
 		return false;
 	};
@@ -238,15 +245,17 @@ public:
 		last = last->getPrevious();
 		last->getNext()->dropNode();
 	};
-	
+
 	/*********************************************************************************************
 	* Function: Iterates over the contents of the list, printing the value of each node in turn.
 	*********************************************************************************************/
-	void print (void) {
-		Node *N;
+	void print() {
+		Node *N = first;
 		while (N != last) {
 			cout << N->getValue() << endl;
+			N = N->getNext(); //Bug fix //
 		}
+		cout << N->getValue() << endl; //Prints the final value (Bug fix?) //
 		cout << "-----------------------------------------------" << endl;
 	}
 };
@@ -259,7 +268,7 @@ int main(int argc, char* argv[]){
 	string s5("Five");
 	string s6("Six");
 
-	DoubleLinkedList<string>* L;
+	DoubleLinkedList<string>* L = new DoubleLinkedList<string>(); //bug fix
 	//Add some numbers to the list
 	L->append(s3);
 	L->append(s4);
@@ -278,8 +287,12 @@ int main(int argc, char* argv[]){
 	L->prepend(s1);
 	L->print();		//All good
 	//add the last number
-	L->prepend(s6);
+	L->append(s6); //Bug changed//
 	L->print();		//Done!
+
+	cin.ignore();
+
+	delete L; // Bug fixed //
 
 	return 0;
 }
