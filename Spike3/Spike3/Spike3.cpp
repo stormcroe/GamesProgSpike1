@@ -30,8 +30,8 @@ public:
 	*********************************************************************************************/
 	DoubleLinkedNode(const DataType initvalue) : value(initvalue){
 		cout << "Creating Node..." << endl;
-		nextnode = NULL; //Bug fix
-		previousnode = NULL; //Bug fix
+		nextnode = NULL; //Bug fix, Was not initialised
+		previousnode = NULL; //Bug fix, Was not initialised
 	}
 
 	/*********************************************************************************************
@@ -61,7 +61,7 @@ public:
 	*********************************************************************************************/
 	void insertNodeBefore(Node* newnode){
 		if (previousnode){
-			newnode->insertNodeBefore(nextnode);	//should be newnode->insertNodeBefore(previousnode);
+			newnode->insertNodeBefore(previousnode);	//bug fix from newnode->insertNodeBefore(nextnode);
 		}
 		setPrevious(newnode);
 		newnode->setNext(this);
@@ -225,7 +225,7 @@ public:
 				N->dropNode();
 				return true;
 			}
-			N = N->getNext(); // Bug fix //
+			N = N->getNext(); // Bug fix: Wasn't stepping through the list
 		}
 		return false;
 	};
@@ -253,9 +253,9 @@ public:
 		Node *N = first;
 		while (N != last) {
 			cout << N->getValue() << endl;
-			N = N->getNext(); //Bug fix //
+			N = N->getNext(); //Bug fix: Didn't use to iterate//
 		}
-		cout << N->getValue() << endl; //Prints the final value (Bug fix?) //
+		cout << N->getValue() << endl; //Prints the final value (Bug fix) //
 		cout << "-----------------------------------------------" << endl;
 	}
 };
@@ -287,12 +287,12 @@ int main(int argc, char* argv[]){
 	L->prepend(s1);
 	L->print();		//All good
 	//add the last number
-	L->append(s6); //Bug changed//
+	L->append(s6); //Bug Fix, Wasn't appending the correct number//
 	L->print();		//Done!
 
 	cin.ignore();
 
-	delete L; // Bug fixed //
+	delete L; // Bug fixed: Memory Leak was here.//
 
 	return 0;
 }
