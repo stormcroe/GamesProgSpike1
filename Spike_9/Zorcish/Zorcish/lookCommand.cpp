@@ -57,6 +57,15 @@ void lookCommand::execute(player * mainPlayer, world * mainWorld, vector<string>
 						cout << i->getFullDesc() << endl;
 					}
 				}
+
+				for each (item* i in mainPlayer->getInventory()->items)
+				{
+					if (i->getFirstId() == text[2])
+					{
+						cout << i->getFullDesc() << endl;
+					}
+				}
+
 			}
 		}
 		else if (text[1] == "IN") {

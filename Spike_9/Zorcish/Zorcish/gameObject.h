@@ -11,6 +11,7 @@ public:
 	gameObject(string ids, string aName, string aDescription);
 	string getName();
 	string getShortDesc();
+	void setDesc(string newDesc);
 	~gameObject();
 
 private:

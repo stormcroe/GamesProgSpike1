@@ -16,6 +16,7 @@ void sharpenCommand::execute(player * mainPLayer, world * mainWorld, vector<stri
 		if (i->areYou(text[1]))
 		{
 			cout << "You find a stone and sharpen " << i->getName() << endl;
+			i->setDesc(i->getFullDesc() + " It is now sharper than it was.");
 			break;
 		}
 	}

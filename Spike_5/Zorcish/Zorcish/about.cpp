@@ -18,7 +18,7 @@ about::~about()
 void about::draw()
 {
 	cout << "This is the About section!" << endl;
-	cout << "Made by Hannah Jones (7649975)" << endl;
+	cout << "Made by Peter Argent (7649991)" << endl;
 	cout << "Press <M> to return to the Main Menu." << endl;
 }
 

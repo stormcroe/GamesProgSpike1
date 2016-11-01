@@ -26,6 +26,9 @@ string gameObject::getShortDesc()
 	return result;
 }
 
+void gameObject::setDesc(string newDesc){
+	description = newDesc;
+}
 
 gameObject::~gameObject()
 {
