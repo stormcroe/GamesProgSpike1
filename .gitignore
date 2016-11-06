@@ -254,5 +254,7 @@ paket-files/
 
 # CodeRush
 .cr/
-Spike17/Saved/
-Spike17/Intermediate/
+
+
+*/Saved/
+*/Intermediate/
