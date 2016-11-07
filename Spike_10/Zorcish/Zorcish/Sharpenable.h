@@ -13,7 +13,7 @@ public:
 	Sharpenable();
 	~Sharpenable();
 	void sharpen(gameObject* holder);
-	
+	bool getSharpened();
 private:
 	bool isSharpened;
 };

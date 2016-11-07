@@ -7,7 +7,9 @@ Sharpenable::Sharpenable()
 	isSharpened = false;
 }
 
-
+bool Sharpenable::getSharpened(){
+	return isSharpened;
+}
 Sharpenable::~Sharpenable()
 {
 }

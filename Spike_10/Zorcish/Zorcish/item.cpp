@@ -23,6 +23,10 @@ bool item::getPickupable()
 	return pickupable;
 }
 
+Sharpenable* item::getSharpenable(){
+	return sharpComponant;
+}
+
 void item::Sharpen(){
 	if (!(sharpComponant == nullptr)){
 		sharpComponant->sharpen(this);

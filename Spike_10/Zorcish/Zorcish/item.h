@@ -12,6 +12,7 @@ private:
 	bool isInv;
 	Sharpenable * sharpComponant = nullptr;
 public:
+	Sharpenable * getSharpenable();
 	item();
 	item(string identifier, string aName, string aDescription, bool aPickup, bool aInv);
 	item(string identifier, string aName, string aDescription, bool aPickup, bool aInv, bool aSharp);
